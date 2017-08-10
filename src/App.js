@@ -11,7 +11,7 @@ class App extends Component {
     }
     clearState() {
         return {
-            currentSec: 30,
+            currentSec: 60,
             isStartDisabled: false
         };
     }
