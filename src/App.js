@@ -8,12 +8,18 @@ class App extends Component {
         this.state = this.clearState();
         this.handleStartClick = this.handleStartClick.bind(this);
         this.handleResetClick = this.handleResetClick.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
     clearState() {
         return {
             currentSec: 60,
             isStartDisabled: false
         };
+    }
+    handleInputChange(event) {
+        this.setState({
+            currentSec: event.target.value
+        });
     }
     tick() {
         let second = this.state.currentSec - 1;
@@ -40,10 +46,18 @@ class App extends Component {
             <div className="App">
                 <div className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
-                    <h2>Stupid Little Timer</h2>
+                    <h2>TFT's Stupid Little Timer</h2>
                 </div>
                 <div className="App-body">
-                    <div className="Show-sec">{this.state.currentSec}</div>
+                    <div>
+                        <input
+                            className="Input-box"
+                            type="number"
+                            min='1'
+                            max='60'
+                            value={this.state.currentSec}
+                            onChange={this.handleInputChange}/>
+                    </div>
                     <button
                         className="Timer-button"
                         disabled={this.state.isStartDisabled}
