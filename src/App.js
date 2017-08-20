@@ -23,9 +23,11 @@ class App extends Component {
     }
     tick() {
         let second = this.state.currentSec - 1;
-        this.setState({
-            currentSec: second
-        });
+        if (second >= 0) {
+            this.setState({
+                currentSec: second
+            });
+        }
         if (second === 0) {
             clearInterval(this.interval);
         }
@@ -56,7 +58,8 @@ class App extends Component {
                             min='1'
                             max='60'
                             value={this.state.currentSec}
-                            onChange={this.handleInputChange}/>
+                            onChange={this.handleInputChange}
+                            disabled={this.state.isStartDisabled}/>
                     </div>
                     <button
                         className="Timer-button"
