@@ -1,46 +1,53 @@
 import React, {Component} from 'react';
 import Key from './Key';
+import KeyConstants from '../../config/KeyConstants'
+import NotesController from './NotesController';
+import _ from 'lodash';
 class Piano extends Component {
     constructor(props){
         super(props);
-        this.handlePianoKeyDown = this.handlePianoKeyDown.bind(this);
+        this.state = {
+            note: null
+        };
+        this.handlePianoKeyPress = this.handlePianoKeyPress.bind(this);
         this.handlePianoKeyClick = this.handlePianoKeyClick.bind(this);
     }
 
     componentDidMount() {
-        window.addEventListener('keydown', this.handlePianoKeyDown);
+        window.addEventListener('keypress', this.handlePianoKeyPress);
     }
 
     componentWillUnMount() {
-        window.removeEventListener('keydown', this.handlePianoKeyDown);
+        window.removeEventListener('keypress', this.handlePianoKeyPress);
     }
 
-    handlePianoKeyDown(e) {
-        const note = e.keyCode - 48;
-        if (note < 8 && note > 0) {
-            this.handleMusicPlay(note);
+    handlePianoKeyPress(e) {
+        const keyBoardKey =  e.key
+        const value = _.find(KeyConstants, {keyBoardKey: keyBoardKey});
+        // TODO trigger ripple effect here
+        if (value) {
+            this.handleMusicPlay(value);
         }
     }
 
-    handlePianoKeyClick(name) {
-        this.handleMusicPlay(name);
+    handlePianoKeyClick(value) {
+        this.handleMusicPlay(value);
     }
 
-    handleMusicPlay(note) {
-        const audio = new Audio('/audios/' + note + '.mp3');
+    handleMusicPlay(value) {
+        const note = value.name;
+        // TODO: to fix chrome Audio bug
+        const audio = new Audio('/piano_ogg/'+ note+'.ogg');
         audio.play();
     }
 
     render() {
         return (
             <div className="Piano">
-                <Key name={'1'} onHandleClick={this.handlePianoKeyClick}/>
-                <Key name={'2'} onHandleClick={this.handlePianoKeyClick}/>
-                <Key name={'3'} onHandleClick={this.handlePianoKeyClick}/>
-                <Key name={'4'} onHandleClick={this.handlePianoKeyClick}/>
-                <Key name={'5'} onHandleClick={this.handlePianoKeyClick}/>
-                <Key name={'6'} onHandleClick={this.handlePianoKeyClick}/>
-                <Key name={'7'} onHandleClick={this.handlePianoKeyClick}/>
+                <NotesController />
+                {KeyConstants.map((key, idx)=> {
+                    return <Key key={idx} value={key} onHandleClick={this.handlePianoKeyClick}/>
+                })}
             </div>
         );
     }

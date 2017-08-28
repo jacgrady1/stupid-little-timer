@@ -5,9 +5,6 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import './Home.css';
 
 class Home extends Component {
-    constructor(props){
-        super(props);
-    }
 
     render() {
         return (

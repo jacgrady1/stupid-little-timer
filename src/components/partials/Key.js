@@ -6,22 +6,51 @@ class Key extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick() {
-        const name = this.props.name;
-        this.props.onHandleClick(name);
+        this.props.onHandleClick(this.props.value);
     }
 
     render() {
-        return (
-            <RaisedButton
-                label={this.props.name}
-                style={{
-                    marginRight: '5px',
-                    height: '200px'
-                }}
-                onClick={this.handleClick}
-            >
-            </RaisedButton>
-        );
+        if (!this.props.value.half) {
+            return (
+                <RaisedButton
+                    label={this.props.value.name}
+                    style={{
+                        marginRight: '2px',
+                        height: '200px',
+                        minWidth: '70px'
+                    }}
+                    labelStyle={{
+                        top: '175px'
+                    }}
+                    onClick={this.handleClick}
+                >
+                </RaisedButton>
+            );
+        } else {
+            return (
+                <RaisedButton
+                    label={this.props.value.name}
+                    style={{
+                        height: '130px',
+                        minWidth: '30px',
+                        position: 'relative',
+                        left: '-31px',
+                        marginRight: '-60px',
+                        zIndex:'100'
+                    }}
+                    buttonStyle={{
+                        backgroundColor: 'black'
+                    }}
+                    labelStyle={{
+                        top: '105px',
+                        color: 'white'
+                    }}
+                    onClick={this.handleClick}
+                >
+                </RaisedButton>
+            );
+        }
+
     }
 }
 
